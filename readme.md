@@ -1,5 +1,10 @@
 ## Usage
 
+Firstly, this class *requires* PHP 5.3. Make sure you have it running.
+
+Secondly, this is still quite new. Only created it in a few hours, so it needs
+a lot of debugging and work. :) In other words, it's Alpha. 
+
 First, download the class, and drag it into the root of your theme directory. 
 
 Next, within `functions.php`, require the class.
