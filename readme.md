@@ -19,7 +19,7 @@ excerpt, I could do:
        'supports' => array('title, 'excerpt')
     );
 
-### Custom Taxonies
+### Custom Taxonomies
 
 It makes sense to filter our sample Snippet post type by difficulty and language. We can implement that functionality quite easily.
 
