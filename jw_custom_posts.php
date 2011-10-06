@@ -24,6 +24,9 @@ class JW_Post_Type {
 	/**
 	 * Sets default values, registers the passed post type, and
 	 * listens for when the post is saved.
+	 * 
+	 * @param string $name The name of the desired post type.
+	 * @param array @post_type_args Override the options.
 	*/
 	function __construct($name, $post_type_args = array() )
 	{
@@ -88,7 +91,8 @@ class JW_Post_Type {
 			"capability_type" => "post",
 			"hierarchical" => false,
 			"menu_position" => null,
-			"supports" => array("title","editor","thumbnail")
+			"supports" => array("title","editor","thumbnail"),
+			'has_archive' => true
 		); 
 		
 		// Take user provided options, and override the defaults.
@@ -146,7 +150,7 @@ class JW_Post_Type {
 					    "labels" => $labels,
 					    "show_ui" => true,
 					    "query_var" => true,
-					    "rewrite" => array( "slug" => strtolower($taxonomy_name) ), // TODO!
+					    "rewrite" => array( "slug" => strtolower($taxonomy_name) )
 						),
 						$options		  
 					);
