@@ -10,7 +10,7 @@ class JW_Post_Type {
 
 	/**
 	* The name of the post type.
-	*	@var string
+	* @var string
 	*/
 	public $post_type_name;
 
@@ -39,9 +39,8 @@ class JW_Post_Type {
 	}
 
 	/**
-   * Helper method, that attaches a passed function to the 'init' WP action
-   * 
-   * @param function $cb Passed callback function.
+	* Helper method, that attaches a passed function to the 'init' WP action
+	* @param function $cb Passed callback function.
 	*/
 	function init($cb)
 	{
@@ -49,9 +48,8 @@ class JW_Post_Type {
 	}
 
 	/**
-   * Helper method, that attaches a passed function to the 'admin_init' WP action
-   *
-   * @param function $cb Passed callback function.
+	* Helper method, that attaches a passed function to the 'admin_init' WP action
+	* @param function $cb Passed callback function.
 	*/
 	function admin_init($cb)
 	{
@@ -60,7 +58,7 @@ class JW_Post_Type {
 
 
 	/**
-   * Registers a new post type in the WP db.
+	* Registers a new post type in the WP db.
 	*/	
 	function register_post_type()
 	{
@@ -162,10 +160,10 @@ class JW_Post_Type {
 
 
 	/**
-   * Creates a new custom meta box in the New 'post_type' page.
-   * 
-   * @param string $title
-   * @param array $form_fields Associated array that contains the label of the input, and the desired input type. 'Title' => 'text'
+	* Creates a new custom meta box in the New 'post_type' page.
+	* 
+	* @param string $title
+	* @param array $form_fields Associated array that contains the label of the input, and the desired input type. 'Title' => 'text'
 	*/
 	function add_meta_box($title, $form_fields = array() )
 	{
@@ -222,7 +220,7 @@ class JW_Post_Type {
 
 
 	/**
-   * When a post saved/updated in the database, this methods updates the meta box params in the db as well.
+	* When a post saved/updated in the database, this methods updates the meta box params in the db as well.
 	*/
 	function save_post()
 	{
@@ -241,10 +239,10 @@ class JW_Post_Type {
 	}
 }
 
+/*********/
+/* USAGE */
+/*********/
 
-/*
-	USAGE
-*/
 // $product = new PostType("movie");
 // $product->add_taxonomy('Actor');
 // $product->add_taxonomy('Director');
