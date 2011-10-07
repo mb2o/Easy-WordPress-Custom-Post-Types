@@ -182,12 +182,34 @@ class JW_Post_Type {
 
 					// Get the saved field values
 					$meta = get_post_custom($post->ID);
-					
+
 					// For each form field specified, we need to create the necessary markup
 					// $name = Label, $type = the type of input to create
 					foreach ($inputs as $name => $type) {
-						// Will turn "Movie Title" into snippet_info_movie_title
+						#'Happiness Info' in 'Snippet Info' box becomes
+						# snippet_info_happiness_level
 						$id_name = $data['id'] . '_' . strtolower(str_replace(' ', '_', $name));
+
+						if( is_array($inputs[$name]) ) {
+							// then it must be a select
+							// filter through them, and create options
+							$select = "<select name='$id_name' class='widefat'>";
+							foreach ($inputs[$name][1] as $option) {
+								// if what's stored in the db is equal to the
+								// current value in the foreach, that should
+								// be the selected one
+
+								if ( isset($meta[$id_name]) && $meta[$id_name][0] == $option) {
+									$set_selected = "selected='selected'";
+								} else $set_selected = '';
+						
+								$select .= "<option value='$option' $set_selected> $option </option>";
+							}
+							$select .= "</select>";
+							array_push($_SESSION['taxonomy_data'], 'select_difficulty');
+						} else {
+							$select = '<select><option>--</option></select>';
+						}
 						
 						// Attempt to set the value of the input, based on what's saved in the db.
 						$value = isset($meta[$id_name][0]) ? $meta[$id_name][0] : '';
@@ -200,12 +222,15 @@ class JW_Post_Type {
 						// TODO - Add the other input types.
 						$lookup = array(
 							"text" => "<input type='text' name='$id_name' value='$value' class='widefat' />",
-							"textarea" => "<textarea name='$id_name' class='widefat' rows='10'>$value</textarea>"
+							"textarea" => "<textarea name='$id_name' class='widefat' rows='10'>$value</textarea>",
+							"select" => $select
 						);
 						?>
+
 						<p>
 							<label><?php echo ucwords($name) . ':'; ?></label><br />
-							<?php echo $lookup[$type]; ?>
+							<?php echo $lookup[is_array($type) ? $type[0] : $type]; ?>
+							
 						</p>
 						<?php
 					}

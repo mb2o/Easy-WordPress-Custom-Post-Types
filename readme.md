@@ -21,7 +21,7 @@ defaults. For example, if I only want to provide support for a title and an
 excerpt, I could do:
 
     $snippet = new JW_Post_Type('Snippet', array(
-       'supports' => array('title, 'excerpt')
+       'supports' => array('title', 'excerpt')
     );
 
 ### Custom Taxonomies
@@ -51,3 +51,15 @@ the snippet, etc.
 
 Within the second array argument, set the label text and the type of input to
 display,respectively.
+
+However, if you require a select box, you need to pass an array, with the first
+key equaling the type of input to create ('select' element), and the second key
+being an array of choices. For example:
+
+    $snippet->add_meta_box(
+      'Favorite Food' =>
+         array(
+            'select', // type of form field
+            array('pizza', 'tacos', 'sandwiches') // list of options
+         )
+   );
