@@ -56,10 +56,8 @@ However, if you require a select box, you need to pass an array, with the first
 key equaling the type of input to create ('select' element), and the second key
 being an array of choices. For example:
 
-    $snippet->add_meta_box(
-      'Favorite Food' =>
-         array(
-            'select', // type of form field
-            array('pizza', 'tacos', 'sandwiches') // list of options
-         )
-   );
+    $snippet->add_meta_box( 'Personal Info', array(
+      'Name' => 'text',
+      'Bio'  => 'textarea'
+      'Favorite Food' => array( 'select', array('pizza', 'tacos') )
+    );
