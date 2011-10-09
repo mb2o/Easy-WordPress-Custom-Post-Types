@@ -206,7 +206,7 @@ class JW_Post_Type {
 								$select .= "<option value='$option' $set_selected> $option </option>";
 							}
 							$select .= "</select>";
-							array_push($_SESSION['taxonomy_data'], 'select_difficulty');
+							array_push($_SESSION['taxonomy_data'], "$id_name");
 						} else {
 							$select = '<select><option>--</option></select>';
 						}
@@ -217,6 +217,7 @@ class JW_Post_Type {
 						// Sorta sloppy. I need a way to access all these form fields later on.
 						// I had trouble finding an easy way to pass these values around, so I'm
 						// storing it in a session. Fix eventually.
+
 						array_push($_SESSION['taxonomy_data'], $id_name);
 
 						// TODO - Add the other input types.
@@ -230,7 +231,7 @@ class JW_Post_Type {
 						<p>
 							<label><?php echo ucwords($name) . ':'; ?></label><br />
 							<?php echo $lookup[is_array($type) ? $type[0] : $type]; ?>
-							
+
 						</p>
 						<?php
 					}
