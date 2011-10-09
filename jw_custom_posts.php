@@ -135,9 +135,9 @@ class JW_Post_Type {
 				    "update_item" => __( "Update $plural" ),
 				    "add_new_item" => __( "Add New $taxonomy_name" ),
 				    "new_item_name" => __( "New $taxonomy_name" ),
-				    "separate_items_with_commas" => __( "Separate $taxonomy_name with commas" ),
-				    "add_or_remove_items" => __( "Add o`r remove $taxonomy_name" ),
-				    "choose_from_most_used" => __( "Choose from the most used $taxonomy_name" ),
+				    "separate_items_with_commas" => __( "Separate $plural with commas" ),
+				    "add_or_remove_items" => __( "Add or remove $taxonomy_name" ),
+				    "choose_from_most_used" => __( "Choose from the most used $plural" ),
 				    "menu_name" => __( $taxonomy_name ),
 				  ); 
 
@@ -254,9 +254,11 @@ class JW_Post_Type {
 
 			// Get all the form fields that were saved in the session,
 			// and update their values in the db.
-			foreach ($_SESSION['taxonomy_data'] as $form_name) {
-				if ( isset($_POST[$form_name]) ) {
-					update_post_meta($post->ID, $form_name, $_POST[$form_name]);
+			if ( isset($_SESSION['taxonomy_data']) ) {
+				foreach ($_SESSION['taxonomy_data'] as $form_name) {
+					if ( isset($_POST[$form_name]) ) {
+						update_post_meta($post->ID, $form_name, $_POST[$form_name]);
+					}
 				}
 			}			
 
