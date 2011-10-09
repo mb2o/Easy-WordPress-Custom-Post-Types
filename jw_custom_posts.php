@@ -30,6 +30,9 @@ class JW_Post_Type {
 	*/
 	function __construct($name, $post_type_args = array() )
 	{
+		if ( !isset($_SESSION['taxonomy_data']) ) {
+			$_SESSION['taxonomy_data'] = array();
+		}
 		$this->post_type_name = strtolower($name);
 		$this->post_type_args = (array) $post_type_args;
 
@@ -206,7 +209,7 @@ class JW_Post_Type {
 								$select .= "<option value='$option' $set_selected> $option </option>";
 							}
 							$select .= "</select>";
-							array_push($_SESSION['taxonomy_data'], "$id_name");
+							array_push($_SESSION['taxonomy_data'], $id_name);
 						} else {
 							$select = '<select><option>--</option></select>';
 						}
@@ -218,7 +221,7 @@ class JW_Post_Type {
 						// I had trouble finding an easy way to pass these values around, so I'm
 						// storing it in a session. Fix eventually.
 
-						array_push($_SESSION['taxonomy_data'], $id_name);
+					array_push($_SESSION['taxonomy_data'], $id_name);
 
 						// TODO - Add the other input types.
 						$lookup = array(
