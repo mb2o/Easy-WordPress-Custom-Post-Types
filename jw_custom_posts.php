@@ -145,16 +145,18 @@ class JW_Post_Type {
 				  ); 
 
 				  // Override defaults with user provided options
-				  $options = array_merge(
-				  	array(
-					    "hierarchical" => false,
-					    "labels" => $labels,
-					    "show_ui" => true,
-					    "query_var" => true,
-					    "rewrite" => array( "slug" => strtolower($taxonomy_name) )
-						),
-						$options		  
-					);
+				  if ( !empty($options) ) {
+					  $options = array_merge(
+					  	array(
+						    "hierarchical" => false,
+						    "labels" => $labels,
+						    "show_ui" => true,
+						    "query_var" => true,
+						    "rewrite" => array( "slug" => strtolower($taxonomy_name) )
+							),
+							$options		  
+						);
+					}
 
 					// name of taxonomy, associated post type, options
 				  register_taxonomy(strtolower($taxonomy_name), $post_type_name, $options);
