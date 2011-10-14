@@ -116,6 +116,7 @@ class JW_Post_Type {
 		$post_type_name = $this->post_type_name;
 
 		// If no plural form of the taxonomy was provided, do a crappy fix. :)
+
 		if ( empty($plural) ) {
 			$plural = $taxonomy_name . 's';
 		}
@@ -145,18 +146,16 @@ class JW_Post_Type {
 				  ); 
 
 				  // Override defaults with user provided options
-				  if ( !empty($options) ) {
-					  $options = array_merge(
-					  	array(
-						    "hierarchical" => false,
-						    "labels" => $labels,
-						    "show_ui" => true,
-						    "query_var" => true,
-						    "rewrite" => array( "slug" => strtolower($taxonomy_name) )
-							),
-							$options		  
-						);
-					}
+				  $options = array_merge(
+				  	array(
+					    "hierarchical" => false,
+					    "labels" => $labels,
+					    "show_ui" => true,
+					    "query_var" => true,
+					    "rewrite" => array( "slug" => strtolower($taxonomy_name) )
+						),
+						$options		  
+					);
 
 					// name of taxonomy, associated post type, options
 				  register_taxonomy(strtolower($taxonomy_name), $post_type_name, $options);
