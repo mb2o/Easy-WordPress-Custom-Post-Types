@@ -67,25 +67,11 @@ class JW_Post_Type {
 	{
 		$n = ucwords($this->post_type_name);
 		
-		$labels = array(
-			"name" => _x(ucwords($n) . "s", "post type general name"),
-			"singular_name" => _x("$n Item", "post type singular name"),
-			"add_new" => _x("Add New", "$n item"),
-			"add_new_item" => __("Add New $n"),
-			"edit_item" => __("Edit $n Item"),
-			"new_item" => __("New $n Item"),
-			"view_item" => __("View $n Item"),
-			"search_items" => __("Search $n"),
-			"not_found" =>  __("Nothing found"),
-			"not_found_in_trash" => __("Nothing found in Trash"),
-			"parent_item_colon" => ""
-		);
-
 		$args = array(
-			"labels" => $labels,
+			"label" => $n . 's',
+			'singular_name' => $n,
 			"public" => true,
 			"publicly_queryable" => true,
-			"show_ui" => true,
 			"query_var" => true,
 			#"menu_icon" => get_stylesheet_directory_uri() . "/article16.png",
 			"rewrite" => true,
@@ -127,29 +113,12 @@ class JW_Post_Type {
 		// At WordPress' init, register the taxonomy
 		$this->init(
 				function() use($taxonomy_name, $plural, $post_type_name, $options) {
-					$labels = array(
-				    "name" => _x( ucwords($taxonomy_name), "taxonomy general name" ),
-				    "singular_name" => _x( $taxonomy_name, "taxonomy singular name" ),
-				    "search_items" =>  __( "Search $taxonomy_name" ),
-				    "popular_items" => __( "Popular $taxonomy_name" ),
-				    "all_items" => __( "All $taxonomy_name" ),
-				    "parent_item" => null,
-				    "parent_item_colon" => null,
-				    "edit_item" => __( "Edit $plural" ), 
-				    "update_item" => __( "Update $plural" ),
-				    "add_new_item" => __( "Add New $taxonomy_name" ),
-				    "new_item_name" => __( "New $taxonomy_name" ),
-				    "separate_items_with_commas" => __( "Separate $plural with commas" ),
-				    "add_or_remove_items" => __( "Add or remove $taxonomy_name" ),
-				    "choose_from_most_used" => __( "Choose from the most used $plural" ),
-				    "menu_name" => __( $taxonomy_name ),
-				  ); 
-
 				  // Override defaults with user provided options
 				  $options = array_merge(
 				  	array(
 					    "hierarchical" => false,
-					    "labels" => $labels,
+					    "label" => $taxonomy_name,
+					    "singular_label" => $plural,
 					    "show_ui" => true,
 					    "query_var" => true,
 					    "rewrite" => array( "slug" => strtolower($taxonomy_name) )
@@ -180,6 +149,8 @@ class JW_Post_Type {
 				$title, // title
 				function($post, $data) { // function that displays the form fields
 					global $post;
+
+					wp_nonce_field(plugin_basename(__FILE__), 'jw_nonce');
 
 					// List of all the specified form fields
 					$inputs = $data['args'][0];
@@ -255,7 +226,15 @@ class JW_Post_Type {
 	function save_post()
 	{
 		add_action('save_post', function()  {
+			// Only do the following if we physically submit the form,
+			// and now when autosave occurs. 
+			if ( defined( 'DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
+
 			global $post;		
+
+			if ( $_POST && !wp_verify_nonce($_POST['jw_nonce'], plugin_basename(__FILE__)) ) {
+  				return;
+  			}
 
 			// Get all the form fields that were saved in the session,
 			// and update their values in the db.
