@@ -2,8 +2,8 @@
 
 Firstly, this class *requires* PHP 5.3. Make sure you have it running.
 
-Secondly, this is still quite new. Only created it in a few hours, so it needs
-a lot of debugging and work. :) In other words, it's Alpha. 
+Secondly, this is still quite new, so it needs
+a lot of debugging and work. :) In other words, it's Beta. 
 
 First, download the class, and drag it into the root of your theme directory. 
 
@@ -24,6 +24,12 @@ excerpt, I could do:
        'supports' => array('title', 'excerpt')
     );
 
+If I want to also use the built-in category and/or tag taxonomies that WordPress provides...
+
+    $snippet = new JW_Post_Type('Snippet', array(
+       'taxonomies' => array('category', 'post_tag')
+    );
+
 ### Custom Taxonomies
 
 It makes sense to filter our sample Snippet post type by difficulty and language. We can implement that functionality quite easily.
@@ -40,21 +46,18 @@ I may also specify the plural form of my taxonomy, and any optional overrides.
 ### Meta Boxes
 
 Our Snippet post type should allow me to enter additional information about the
-single snippet - perhaps a GitHub link, additional notes, an associated url for
-the snippet, etc. 
+single snippet - perhaps a GitHub link, additional notes, an associated url for the snippet, etc. These items are unique to each post, and can be displayed in a custom meta box.
 
     $snippet->add_meta_box('Snippet Info', array(
       'Associated URL' => 'text',
       'GitHub Link' => 'text',
-      'Additional Notes' => 'textarea'
+      'Additional Notes' => 'textarea',
+      'Original Snippet' => 'checkbox'
     ));
 
-Within the second array argument, set the label text and the type of input to
-display,respectively.
+Within the second array argument, set the label text and the type of input to display, respectively.
 
-However, if you require a select box, you need to pass an array, with the first
-key equaling the type of input to create ('select' element), and the second key
-being an array of choices. For example:
+However, if you require a select box, you need to pass an array, with the first key equaling the type of input to create ('select' element), and the second key being an array of choices. For example:
 
     $snippet->add_meta_box( 'Personal Info', array(
       'Name' => 'text',

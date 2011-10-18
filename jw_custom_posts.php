@@ -188,23 +188,25 @@ class JW_Post_Type {
 						
 						// Attempt to set the value of the input, based on what's saved in the db.
 						$value = isset($meta[$id_name][0]) ? $meta[$id_name][0] : '';
+						
+						$checked = ($type == 'checkbox' && !empty($value) ? 'checked' : '');
 
 						// Sorta sloppy. I need a way to access all these form fields later on.
 						// I had trouble finding an easy way to pass these values around, so I'm
 						// storing it in a session. Fix eventually.
-
-					array_push($_SESSION['taxonomy_data'], $id_name);
+						array_push($_SESSION['taxonomy_data'], $id_name);
 
 						// TODO - Add the other input types.
 						$lookup = array(
-							"text" => "<input type='text' name='$id_name' value='$value' class='widefat' />",
-							"textarea" => "<textarea name='$id_name' class='widefat' rows='10'>$value</textarea>",
-							"select" => $select
+							"text" 	   	=> "<input type='text' name='$id_name' value='$value' class='widefat' />",
+							"textarea"  => "<textarea name='$id_name' class='widefat' rows='10'>$value</textarea>",
+							"checkbox"  => "<input type='checkbox' name='$id_name' value='$name' $checked />",
+							"select"    => $select
 						);
 						?>
 
 						<p>
-							<label><?php echo ucwords($name) . ':'; ?></label><br />
+							<label><?php echo ucwords($name) . ':'; ?></label>
 							<?php echo $lookup[is_array($type) ? $type[0] : $type]; ?>
 
 						</p>
@@ -240,9 +242,12 @@ class JW_Post_Type {
 			// and update their values in the db.
 			if ( isset($_SESSION['taxonomy_data']) ) {
 				foreach ($_SESSION['taxonomy_data'] as $form_name) {
-					if ( isset($_POST[$form_name]) ) {
+					// Make better. Have to do this, because I can't figure
+					// out a better way to deal with checkboxes. If deselected,
+					// they won't be represented here, but I still need to 
+					// update the value to false to blank in the table. Hmm...
+					if (!isset($_POST[$form_name])) $_POST[$form_name] = '';
 						update_post_meta($post->ID, $form_name, $_POST[$form_name]);
-					}
 				}
 			}			
 
