@@ -52,10 +52,16 @@ single snippet - perhaps a GitHub link, additional notes, an associated url for 
       'Associated URL' => 'text',
       'GitHub Link' => 'text',
       'Additional Notes' => 'textarea',
-      'Original Snippet' => 'checkbox'
+      'Original Snippet' => 'checkbox',
+      'Snippet Image' => 'file'
     ));
 
-Within the second array argument, set the label text and the type of input to display, respectively.
+Within the second array argument, set the label text and the type of input to display, respectively. The available input choices are:
+
+- text
+- textarea
+- checkbox
+- file (for uploading images and files)
 
 However, if you require a select box, you need to pass an array, with the first key equaling the type of input to create ('select' element), and the second key being an array of choices. For example:
 
