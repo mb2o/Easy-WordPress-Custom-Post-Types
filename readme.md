@@ -61,7 +61,8 @@ Within the second array argument, set the label text and the type of input to di
 - text
 - textarea
 - checkbox
-- file (for uploading images and files)
+- file (for uploading images and files),
+- select (for dropdown)
 
 However, if you require a select box, you need to pass an array, with the first key equaling the type of input to create ('select' element), and the second key being an array of choices. For example:
 
