@@ -117,6 +117,7 @@ class JW_Post_Type
             function() use($taxonomy_name, $plural, $post_type_name, $options)
             {
                 // Override defaults with user provided options
+
                 $options = array_merge(
                     array(
                          "hierarchical" => false,
@@ -238,7 +239,7 @@ class JW_Post_Type
                                         $image_types = array('jpeg', 'jpg', 'bmp', 'gif', 'png');
                                         if ( isset($file) ) {
                                             if ( in_array($file_type['ext'], $image_types) ) {
-                                                echo "<img src='$file' alt='' />";
+                                                echo "<img src='$file' alt='' style='max-width: 400px;' />";
                                             } else {
                                                 echo "<a href='$file'>$file</a>";
                                             }
@@ -321,3 +322,6 @@ class JW_Post_Type
 // 'Profile Image' => 'file'
 
 // ));
+
+
+
