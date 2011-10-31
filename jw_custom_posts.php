@@ -31,9 +31,11 @@ class JW_Post_Type
      */
     function __construct($name, $post_type_args = array())
     {
-        if (!isset($_SESSION['taxonomy_data'])) {
+        if (!isset($_SESSION["taxonomy_data"])) {
             $_SESSION['taxonomy_data'] = array();
         }
+   
+        
         $this->post_type_name = strtolower($name);
         $this->post_type_args = (array)$post_type_args;
 
@@ -298,9 +300,13 @@ class JW_Post_Type
                             // they won't be represented here, but I still need to
                             // update the value to false to blank in the table. Hmm...
                             if (!isset($_POST[$form_name])) $_POST[$form_name] = '';
-                            update_post_meta($post->ID, $form_name, $_POST[$form_name]);
+                            if (isset($post->ID) ) {
+                                update_post_meta($post->ID, $form_name, $_POST[$form_name]);
+                            }
                         }
                     }
+
+                    $_SESSION['taxonomy_data'] = array();
 
                 }
 
